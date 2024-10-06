@@ -1,1 +1,3 @@
-Project - Trading Using advanced Machine Learning approaches
+# Project - Trading Using advanced Machine Learning approaches
+# Author - Nishant Nayar
+

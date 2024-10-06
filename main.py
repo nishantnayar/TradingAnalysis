@@ -1,16 +1,23 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import os
+import subprocess
+import dotenv
+from src.data.data_loader import AlpacaDataLoader
+from src.utils.helper import print_with_timestamp
 
 
-# Press the green button in the gutter to run the script.
+def run_trading_analysis():
+    dotenv_path = r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\config\.env"
+    stock_file = r"src\config\stocks.txt"
+    start_date = "2024-01-01 00:00:00"
+    trading_system = AlpacaDataLoader(dotenv_path)
+    trading_system.run(stock_file, start_date)
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    try:
+        print_with_timestamp("Starting the Alpaca Trading System...")
+        run_trading_analysis()
+        print_with_timestamp("Alpaca Trading System completed successfully.")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    except Exception as e:
+        print(e)

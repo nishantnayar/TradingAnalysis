@@ -121,12 +121,28 @@ class AlpacaDataLoader:
         else:
             print("No data available for TimeFrame.Hour to clean and save.")
 
+        # Run for TimeFrame.Hour
+        all_bars_df_hour = self.retrieve_historical_data(stock_symbols, start_date, TimeFrame.Hour)
+        if not all_bars_df_hour.empty:
+            cleaned_df_hour = self.clean_data(all_bars_df_hour, TimeFrame.Hour)
+            self.save_data(cleaned_df_hour, r'src/data/pickle/historical_data_hour.pkl')
+        else:
+            print("No data available for TimeFrame.Hour to clean and save.")
+
+        # # Run for TimeFrame.Day
+        # all_bars_df_day = self.retrieve_historical_data(stock_symbols, start_date, TimeFrame.Day)
+        # if not all_bars_df_day.empty:
+        #     cleaned_df_day = self.clean_data(all_bars_df_day, TimeFrame.Day)
+        #     self.save_data(cleaned_df_day, r'src/data/pickle/historical_data_day.pkl')
+        # else:
+        #     print("No data available for TimeFrame.Day to clean and save.")
+
 
 # Usage
 if __name__ == "__main__":
     dotenv_path = dotenv.find_dotenv()
     stock_file = r"src\config\stocks.txt"
-    start_date = "2024-01-01 00:00:00"
+    start_date = "2024-10-01 00:00:00"
 
     trading_system = AlpacaDataLoader(dotenv_path)
     trading_system.run(stock_file, start_date)

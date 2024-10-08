@@ -67,7 +67,7 @@ if selected == "Prices":
                 if selected_timeframe == "Daily":
                     try:
                         ohlc_data = pd.read_pickle(r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\data"
-                                                   r"\pickle\historical_data_daily.pkl")
+                                                   r"\pickle\historical_data_day.pkl")
                         # create a list of unique tickers
                         tickers = ohlc_data['symbol'].unique()
                         selected_ticker = st.selectbox("Select a ticker", tickers)
@@ -94,6 +94,12 @@ if selected == "Prices":
             {'count': 60, 'step': 'hour', 'stepmode': 'backward', 'label': '60 Mins'},
         ]
 
+        time_buttons_day = [
+            {'step': 'all', 'stepmode': 'backward', 'label': 'All'},
+            {'count': 30, 'step': 'day', 'stepmode': 'backward', 'label': '30 Days'},
+            {'count': 60, 'step': 'day', 'stepmode': 'backward', 'label': '60 Days'},
+        ]
+
         # Build the chart
         fig = go.Figure()
         fig.add_trace(go.Candlestick(x=ohlc_data_selected.index,
@@ -109,6 +115,8 @@ if selected == "Prices":
             fig.update_xaxes(rangeselector={'buttons': time_buttons_hour})
         if selected_timeframe == "Minute":
             fig.update_xaxes(rangeselector={'buttons': time_buttons_minute})
+        if selected_timeframe == "Daily":
+            fig.update_xaxes(rangeselector={'buttons': time_buttons_day})
         fig.update_xaxes(rangebreaks=[dict(bounds=[16, 9.30], pattern="hour"), dict(bounds=['sat', 'mon'])],
                          showgrid=False)
         st.plotly_chart(fig, use_container_width=True)
@@ -136,7 +144,7 @@ if selected == "About":
         col1.write('**Education:**    M.S. Data Science')
         col1.write('**College:**    Physical Sciences Division, University of Chicago')
         col1.write('**Contact:**    nishant.nayar@hotmail.com  or [linkedin](https://www.linkedin.com/in/nishantnayar)')
-        img = Image.open('src/ui/fig/IMG_0245.jpg').resize((200, 200))
+        img = Image.open(r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\ui\fig\IMG_0245.jpg").resize((200, 200))
         col2.image(img)
 
     st.divider()
@@ -153,3 +161,5 @@ if selected == "About":
     st.title('Experience')
     st.markdown("- Vice President, JPMorganChase & Co., Chicago, New York")
     st.markdown("- Manager- Business Consulting, Sapient Corporation, Boston")
+
+# TODO: Fix daily chart

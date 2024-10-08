@@ -1,0 +1,84 @@
+/* CSS */
+
+/* Horizontal Rule Styling */
+hr {
+    margin: 1px 0px !important;
+    background: #ff3a50;
+}
+
+/* Footer Styling */
+.footer {
+    position: absolute;
+    height: 1px;
+    bottom: -150px;
+    width: 100%;
+    padding: 1px;
+    text-align: center;
+}
+
+/* Hide Main Menu and Footer */
+#MainMenu,
+.reportview-container .main footer {
+    display: none;
+}
+
+/* Button Outline */
+.btn-outline-secondary {
+    background: #FFF !important;
+}
+
+/* Download Link Hover Effect */
+.download_link:hover {
+    background: #f63366 !important;
+    color: #FFF !important;
+}
+
+/* Header and Anchor Link Styling */
+h1, h2, h3, h4, h5, h6, a, a:visited {
+    color: #f84f57 !important;
+}
+
+/* Label, Paragraph, and Text Color */
+label, stText, p, .caption {
+    color: #035672;
+}
+
+/* Background Styling for specific classes */
+.css-17eq0hr {
+    background: #fff2cc !important;
+}
+
+/* Expander Header Font Size */
+.streamlit-expanderHeader {
+    font-size: 16px !important;
+}
+
+/* Text and Label Color Adjustments */
+.css-17eq0hr label, stText, .caption, .css-j075dz, .css-1t42vg8 {
+    color: #434343 !important;
+}
+
+/* Underline for Anchor Links */
+.css-17eq0hr a {
+    text-decoration: underline;
+}
+
+/* Tick Bar Color */
+.tickBarMin, .tickBarMax {
+    color: #f84f57 !important;
+}
+
+/* Paragraph Text Color in Markdown */
+.markdown-text-container p {
+    color: #035672 !important;
+}
+
+/* Maximum Width for Containers */
+.css-hi6a2p {
+    max-width: 800px !important;
+}
+
+/* Remove top padding or whitespace */
+.block-container {
+    padding-top: 0rem !important;
+}

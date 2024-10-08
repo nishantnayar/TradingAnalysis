@@ -12,6 +12,15 @@ st.set_page_config(page_title="Trading Application",
                    initial_sidebar_state="expanded")
 count = st_autorefresh(interval=60000, limit=100000000, key="fizzbuzzcounter")
 
+
+# this is where we will create a CSS file
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)
+
+
+local_css(r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\config\CustomStyle.css")
+
 # options menu
 with st.sidebar:
     selected = option_menu("Main Menu", ['Home', 'Prices', 'Models', 'About'],

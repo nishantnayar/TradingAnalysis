@@ -19,7 +19,6 @@ class AlpacaDataLoader:
         self.account_number = None
         self.trading_client = None
         self.historical_client = None
-        self.all_bars_data = []
 
     def log(self, message):
         """Utility to print messages."""
@@ -59,6 +58,7 @@ class AlpacaDataLoader:
         """Retrieve historical stock data for the provided list of symbols."""
         self.log(f"Retrieving historical data for {timeframe}")
         self.historical_client = StockHistoricalDataClient(self.api_key, self.secret_key)
+        all_bars_data = []  # Create a separate list for each timeframe's data
         for symbol in stock_symbols:
             print(f"\nRetrieving historical data for {symbol} with {timeframe} timeframe...")
             request_params = StockBarsRequest(
@@ -70,13 +70,13 @@ class AlpacaDataLoader:
                 bars = self.historical_client.get_stock_bars(request_params)
                 bars_df = bars.df
                 bars_df['symbol'] = symbol  # Add a column for the stock symbol
-                self.all_bars_data.append(bars_df)
+                all_bars_data.append(bars_df)
             except Exception as e:
                 print(f"Error retrieving historical data for {symbol}: {e}")
 
-        if self.all_bars_data:
-            all_bars_df = pd.concat(self.all_bars_data)
-            print(f"Final dataframe created with {len(all_bars_df)} records")
+        if all_bars_data:
+            all_bars_df = pd.concat(all_bars_data)
+            print(f"Final dataframe created with {len(all_bars_df)} records for {timeframe}")
             return all_bars_df
         else:
             print("No data retrieved.")
@@ -84,14 +84,14 @@ class AlpacaDataLoader:
 
     def clean_data(self, all_bars_df, timeframe):
         """Clean the historical data by removing unnecessary columns and null values."""
-        self.log("Starting cleaning activities")
+        self.log(f"Starting cleaning activities for {timeframe}")
 
         # Remove 'symbol' from the index and reset it
         try:
             all_bars_df = all_bars_df.reset_index(level='symbol', drop=True)
-            print(f"Removed symbol column from the index.\n")
+            print(f"Removed symbol column from the index for {timeframe}.\n")
         except Exception as e:
-            print(f"Error while removing symbol column")
+            print(f"Error while removing symbol column for {timeframe}: {e}")
 
         return all_bars_df
 
@@ -119,7 +119,7 @@ class AlpacaDataLoader:
             cleaned_df_minute = self.clean_data(all_bars_df_minute, TimeFrame.Minute)
             self.save_data(cleaned_df_minute, r'src/data/pickle/historical_data_minute.pkl')
         else:
-            print("No data available for TimeFrame.Hour to clean and save.")
+            print("No data available for TimeFrame.Minute to clean and save.")
 
         # Run for TimeFrame.Hour
         all_bars_df_hour = self.retrieve_historical_data(stock_symbols, start_date, TimeFrame.Hour)
@@ -129,13 +129,13 @@ class AlpacaDataLoader:
         else:
             print("No data available for TimeFrame.Hour to clean and save.")
 
-        # # Run for TimeFrame.Day
-        # all_bars_df_day = self.retrieve_historical_data(stock_symbols, start_date, TimeFrame.Day)
-        # if not all_bars_df_day.empty:
-        #     cleaned_df_day = self.clean_data(all_bars_df_day, TimeFrame.Day)
-        #     self.save_data(cleaned_df_day, r'src/data/pickle/historical_data_day.pkl')
-        # else:
-        #     print("No data available for TimeFrame.Day to clean and save.")
+        # Run for TimeFrame.Day
+        all_bars_df_day = self.retrieve_historical_data(stock_symbols, start_date, TimeFrame.Day)
+        if not all_bars_df_day.empty:
+            cleaned_df_day = self.clean_data(all_bars_df_day, TimeFrame.Day)
+            self.save_data(cleaned_df_day, r'src/data/pickle/historical_data_day.pkl')
+        else:
+            print("No data available for TimeFrame.Day to clean and save.")
 
 
 # Usage

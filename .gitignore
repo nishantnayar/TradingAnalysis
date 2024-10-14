@@ -1,3 +1,5 @@
 
 src/config/.env
 *.pkl
+src/ratios.ipynb
+*.pyc

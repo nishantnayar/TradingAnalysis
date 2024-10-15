@@ -3,3 +3,7 @@ src/config/.env
 *.pkl
 src/ratios.ipynb
 *.pyc
+/.idea
+/.idea
+.idea/TradingAnalysis.iml
+.idea/misc.xml

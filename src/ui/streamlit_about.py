@@ -17,8 +17,6 @@ def streamlit_about_display():
             (200, 200))
         col2.image(img)
 
-    # st.divider()
-
     st.title('About Me')
     st.write("Passionate about uncovering the potential within data, I bring over 15 years of experience in data "
              "management and analytics, complemented by an MS in Analytics from The University of Chicago with a "

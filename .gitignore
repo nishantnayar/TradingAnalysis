@@ -4,6 +4,5 @@ src/config/.env
 src/ratios.ipynb
 *.pyc
 /.idea
-/.idea
 .idea/TradingAnalysis.iml
 .idea/misc.xml

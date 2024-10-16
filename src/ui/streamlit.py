@@ -20,6 +20,8 @@ count = st_autorefresh(interval=60000, limit=100000000, key="fizzbuzzcounter")
 
 
 # this is where we will create a CSS file
+# Added caching to improve performance
+@st.cache_resource
 def local_css(file_name):
     with open(file_name) as f:
         st.markdown('<style>{}</style>'.format(f.read()), unsafe_allow_html=True)

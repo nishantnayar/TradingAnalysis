@@ -2,43 +2,71 @@ import pandas as pd
 import streamlit as st
 from datetime import datetime
 import plotly.graph_objects as go
+from sqlalchemy import create_engine
 
 
-@st.cache_data(show_spinner=True,ttl=3600, max_entries=5)
+@st.cache_data(show_spinner=True, ttl=3600, max_entries=5)
 def load_ohlc_data(timeframe):
-    data_paths = {
-        "Minute": r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\data\pickle\historical_data_minute.pkl",
-        "Hourly": r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\data\pickle\historical_data_hour.pkl",
-        "Daily": r"C:\Users\nisha\Documents\PythonProjects\TradingAnalysis\src\data\pickle\historical_data_day.pkl"
+    # Database connection parameters
+    db_params = {
+        'user': 'postgres',
+        'password': 'nishant',
+        'host': 'localhost',  # or your database host
+        'port': '5432',       # default PostgreSQL port
+        'database': 'trading_data'
     }
 
+    # Create the database connection
+    connection_string = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['database']}"
+    engine = create_engine(connection_string)
+
+    # Define table names based on timeframe
+    table_name = {
+        "Minute": "alpaca_data_min",
+        "Hourly": "alpaca_data_hourly",
+        "Daily": "alpaca_data_daily"
+    }.get(timeframe)
+
+    if table_name is None:
+        st.warning("Invalid timeframe selected.")
+        return None, []
+
     try:
-        ohlc_data = pd.read_pickle(data_paths[timeframe])
+        # Query the data from the selected table
+        ohlc_data = pd.read_sql(f"SELECT * FROM {table_name}", engine)
+
+        # Get unique tickers
         tickers = ohlc_data['symbol'].unique()
 
-        # reset Index
-        ohlc_data = ohlc_data.reset_index()
+        # Ensure 'datetime' is in the correct format
+        ohlc_data['timestamp'] = pd.to_datetime(ohlc_data['timestamp'], errors='coerce', utc=True)  # Parse as UTC
+        
+        # Check for NaT values after conversion
+        if ohlc_data['timestamp'].isnull().any():
+            st.warning("Some datetime values could not be parsed and will be removed.")
+            ohlc_data = ohlc_data.dropna(subset=['timestamp'])
 
-        # drop one column
-        ohlc_data = ohlc_data.drop(columns=['level_0'])
+        # Convert to local timezone if needed
+        ohlc_data['timestamp'] = ohlc_data['timestamp'].dt.tz_convert('America/New_York')  # Change to your desired timezone
 
-        # rename column level_1
-        ohlc_data = ohlc_data.rename(columns={'level_1': 'datetime'})
+        # Format datetime as string for display
+        ohlc_data['timestamp'] = ohlc_data['timestamp'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
+        # Reorder columns based on the timeframe
         if timeframe == "Daily":
-            ohlc_data['date'] = pd.to_datetime(ohlc_data['datetime']).dt.strftime('%Y-%m-%d')
-            ohlc_data = ohlc_data.drop(columns=['datetime'])
-
-        # reorder columns
-        if timeframe == "Daily":
+            ohlc_data['date'] = ohlc_data['timestamp'].str[:10]  # Extract the date part
             ohlc_data = ohlc_data[['date', 'symbol', 'close', 'open', 'high', 'low', 'trade_count', 'vwap']]
         else:
-            ohlc_data = ohlc_data[['datetime', 'symbol', 'close', 'open', 'high', 'low', 'trade_count', 'vwap']]
+            ohlc_data = ohlc_data[['timestamp', 'symbol', 'close', 'open', 'high', 'low', 'trade_count', 'vwap']]
 
         return ohlc_data, tickers
-    except FileNotFoundError:
-        st.warning("Please download the pickled data first")
+
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
         return None, []
+
+
+
 
 
 def convert_now():

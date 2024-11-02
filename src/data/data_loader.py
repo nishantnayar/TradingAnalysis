@@ -1,16 +1,16 @@
-# import os
-# import pickle
-# import pandas as pd
-# import psycopg2
-# from dotenv import load_dotenv
-# import alpaca
-# from alpaca.trading.client import TradingClient
-# from alpaca.data.historical.stock import StockHistoricalDataClient
-# from alpaca.data.requests import StockBarsRequest
-# from alpaca.data.timeframe import TimeFrame
-# from psycopg2.extras import execute_values
-# from datetime import datetime, timedelta
-# from src.utils.helper import print_with_timestamp
+import os
+import pickle
+import pandas as pd
+import psycopg2
+from dotenv import load_dotenv
+import alpaca
+from alpaca.trading.client import TradingClient
+from alpaca.data.historical.stock import StockHistoricalDataClient
+from alpaca.data.requests import StockBarsRequest
+from alpaca.data.timeframe import TimeFrame
+from psycopg2.extras import execute_values
+from datetime import datetime, timedelta
+from src.utils.helper import print_with_timestamp
 #
 #
 # class AlpacaDataLoader:
@@ -67,8 +67,8 @@
 #         except AssertionError as e:
 #             raise Exception(f"Account number not found : {e}")
 #
-#     def retrieve_max_timestamp(self):
-#         """Retrieve the maximum timestamp from the PostgreSQL database."""
+#     def retrieve_max_timestamp_daily(self):
+#         """Retrieve the maximum timestamp from the daily PostgreSQL database."""
 #         conn = psycopg2.connect(**self.db_params)
 #         cursor = conn.cursor()
 #         cursor.execute("SELECT MAX(timestamp) FROM alpaca_data_daily;")
@@ -77,15 +77,35 @@
 #         conn.close()
 #         return max_timestamp
 #
+#     def retrieve_max_timestamp_hourly(self):
+#         """Retrieve the maximum timestamp from the hourly PostgreSQL database."""
+#         conn = psycopg2.connect(**self.db_params)
+#         cursor = conn.cursor()
+#         cursor.execute("SELECT MAX(timestamp) FROM alpaca_data_hourly;")
+#         max_timestamp = cursor.fetchone()[0]
+#         cursor.close()
+#         conn.close()
+#         return max_timestamp
+#
 #     def get_next_date(self):
-#         """Determine the next date based on the maximum timestamp in the database."""
-#         max_timestamp = self.retrieve_max_timestamp()
+#         """Determine the next date based on the maximum timestamp in the daily database."""
+#         max_timestamp = self.retrieve_max_timestamp_daily()
 #         if max_timestamp is None:
 #             # If there is no data in the database, start from a default date
 #             return datetime(2024, 1, 1)  # Default start date
 #         else:
 #             # Increment the max timestamp by 1 day
 #             return max_timestamp + timedelta(days=1)
+#
+#     def get_next_hour(self):
+#         """Determine the next hour based on the maximum timestamp in the hourly database."""
+#         max_timestamp = self.retrieve_max_timestamp_hourly()
+#         if max_timestamp is None:
+#             # If there is no data in the database, start from a default date
+#             return datetime(2024, 1, 1, 0, 0)  # Default start date with hour
+#         else:
+#             # Increment the max timestamp by 1 hour
+#             return max_timestamp + timedelta(hours=1)
 #
 #     def retrieve_historical_data(self, stock_symbols, start_date, timeframe):
 #         """Retrieve historical stock data for the provided list of symbols."""
@@ -138,15 +158,18 @@
 #             pickle.dump(all_bars_df, f)
 #         print(f"\nDataFrame successfully saved to {filepath}.\n")
 #
-#     def insert_ohlc_data(self, df):
+#     def insert_ohlc_data(self, df, is_hourly=False):
 #         """Insert OHLC data into PostgreSQL database."""
 #         # Connect to the PostgreSQL database
 #         conn = psycopg2.connect(**self.db_params)
 #         cursor = conn.cursor()
 #
+#         # Determine the correct table based on the timeframe
+#         table_name = 'alpaca_data_hourly' if is_hourly else 'alpaca_data_daily'
+#
 #         # Define the insert SQL query
-#         insert_query = """
-#         INSERT INTO alpaca_data_daily (symbol, timestamp, open, high, low, close, volume, trade_count, vwap)
+#         insert_query = f"""
+#         INSERT INTO {table_name} (symbol, timestamp, open, high, low, close, volume, trade_count, vwap)
 #         VALUES %s
 #         ON CONFLICT (symbol, timestamp) DO NOTHING;
 #         """
@@ -162,7 +185,7 @@
 #         conn.commit()
 #         cursor.close()
 #         conn.close()
-#         print_with_timestamp("Data inserted successfully.")
+#         print_with_timestamp(f"Data inserted successfully into {table_name}.")
 #
 #     def run(self, stock_file):
 #         """Main method to run the entire process for both timeframes."""
@@ -174,20 +197,29 @@
 #         with open(stock_file, 'r') as file:
 #             stock_symbols = [line.strip() for line in file if line.strip()]
 #
-#         # Get the next date based on max timestamp
-#         start_date = self.get_next_date()
-#         print(f"Starting data retrieval from: {start_date}")
+#         # Get the next date based on max timestamp for daily data
+#         start_date_daily = self.get_next_date()
+#         print(f"Starting daily data retrieval from: {start_date_daily}")
 #
 #         # Run for TimeFrame.Day
-#         all_bars_df_day = self.retrieve_historical_data(stock_symbols, start_date, TimeFrame.Day)
+#         all_bars_df_day = self.retrieve_historical_data(stock_symbols, start_date_daily, TimeFrame.Day)
 #         if not all_bars_df_day.empty:
 #             cleaned_df_day = self.clean_data(all_bars_df_day, TimeFrame.Day)
-#             # self.save_data(cleaned_df_day, r'src/data/pickle/historical_data_day.pkl')
-#
-#             # Save to PostgreSQL
-#             self.insert_ohlc_data(cleaned_df_day)
+#             self.insert_ohlc_data(cleaned_df_day)  # Save to PostgreSQL
 #         else:
 #             print("No data available for TimeFrame.Day to clean and save.")
+#
+#         # Get the next hour based on max timestamp for hourly data
+#         start_date_hourly = self.get_next_hour()
+#         print(f"Starting hourly data retrieval from: {start_date_hourly}")
+#
+#         # Run for TimeFrame.Hour
+#         all_bars_df_hour = self.retrieve_historical_data(stock_symbols, start_date_hourly, TimeFrame.Hour)
+#         if not all_bars_df_hour.empty:
+#             cleaned_df_hour = self.clean_data(all_bars_df_hour, TimeFrame.Hour)
+#             self.insert_ohlc_data(cleaned_df_hour, is_hourly=True)  # Save to PostgreSQL
+#         else:
+#             print("No data available for TimeFrame.Hour to clean and save.")
 #
 #
 # # Usage
@@ -198,20 +230,6 @@
 #     trading_system = AlpacaDataLoader(dotenv_path)
 #     trading_system.run(stock_file)
 
-
-import os
-import pickle
-import pandas as pd
-import psycopg2
-from dotenv import load_dotenv
-import alpaca
-from alpaca.trading.client import TradingClient
-from alpaca.data.historical.stock import StockHistoricalDataClient
-from alpaca.data.requests import StockBarsRequest
-from alpaca.data.timeframe import TimeFrame
-from psycopg2.extras import execute_values
-from datetime import datetime, timedelta
-from src.utils.helper import print_with_timestamp
 
 
 class AlpacaDataLoader:
@@ -288,31 +306,45 @@ class AlpacaDataLoader:
         conn.close()
         return max_timestamp
 
+    def retrieve_max_timestamp_minute(self):
+        """Retrieve the maximum timestamp from the minute PostgreSQL database."""
+        conn = psycopg2.connect(**self.db_params)
+        cursor = conn.cursor()
+        cursor.execute("SELECT MAX(timestamp) FROM alpaca_data_min;")
+        max_timestamp = cursor.fetchone()[0]
+        cursor.close()
+        conn.close()
+        return max_timestamp
+
     def get_next_date(self):
         """Determine the next date based on the maximum timestamp in the daily database."""
         max_timestamp = self.retrieve_max_timestamp_daily()
         if max_timestamp is None:
-            # If there is no data in the database, start from a default date
-            return datetime(2024, 1, 1)  # Default start date
+            return datetime(2024, 1, 1)
         else:
-            # Increment the max timestamp by 1 day
             return max_timestamp + timedelta(days=1)
 
     def get_next_hour(self):
         """Determine the next hour based on the maximum timestamp in the hourly database."""
         max_timestamp = self.retrieve_max_timestamp_hourly()
         if max_timestamp is None:
-            # If there is no data in the database, start from a default date
-            return datetime(2024, 1, 1, 0, 0)  # Default start date with hour
+            return datetime(2024, 1, 1, 0, 0)
         else:
-            # Increment the max timestamp by 1 hour
             return max_timestamp + timedelta(hours=1)
+
+    def get_next_minute(self):
+        """Determine the next minute based on the maximum timestamp in the minute database."""
+        max_timestamp = self.retrieve_max_timestamp_minute()
+        if max_timestamp is None:
+            return datetime(2024, 1, 1, 0, 0)
+        else:
+            return max_timestamp + timedelta(minutes=1)
 
     def retrieve_historical_data(self, stock_symbols, start_date, timeframe):
         """Retrieve historical stock data for the provided list of symbols."""
         self.log(f"Retrieving historical data for {timeframe}")
         self.historical_client = StockHistoricalDataClient(self.api_key, self.secret_key)
-        all_bars_data = []  # Create a separate list for each timeframe's data
+        all_bars_data = []
         for symbol in stock_symbols:
             print(f"\nRetrieving historical data for {symbol} with {timeframe} timeframe...")
             request_params = StockBarsRequest(
@@ -323,7 +355,7 @@ class AlpacaDataLoader:
             try:
                 bars = self.historical_client.get_stock_bars(request_params)
                 bars_df = bars.df
-                bars_df['symbol'] = symbol  # Add a column for the stock symbol
+                bars_df['symbol'] = symbol
                 all_bars_data.append(bars_df)
             except Exception as e:
                 print(f"Error retrieving historical data for {symbol}: {e}")
@@ -352,76 +384,66 @@ class AlpacaDataLoader:
 
         return all_bars_df
 
-    def save_data(self, all_bars_df, filepath):
-        """Save the cleaned data to a pickle file."""
-        self.log(f"Saving data to a pickle file at {filepath}")
-        with open(filepath, 'wb') as f:
-            pickle.dump(all_bars_df, f)
-        print(f"\nDataFrame successfully saved to {filepath}.\n")
-
-    def insert_ohlc_data(self, df, is_hourly=False):
+    def insert_ohlc_data(self, df, is_hourly=False, is_minute=False):
         """Insert OHLC data into PostgreSQL database."""
-        # Connect to the PostgreSQL database
         conn = psycopg2.connect(**self.db_params)
         cursor = conn.cursor()
 
-        # Determine the correct table based on the timeframe
-        table_name = 'alpaca_data_hourly' if is_hourly else 'alpaca_data_daily'
+        table_name = 'alpaca_data_min' if is_minute else 'alpaca_data_hourly' if is_hourly else 'alpaca_data_daily'
 
-        # Define the insert SQL query
         insert_query = f"""
         INSERT INTO {table_name} (symbol, timestamp, open, high, low, close, volume, trade_count, vwap)
         VALUES %s
         ON CONFLICT (symbol, timestamp) DO NOTHING;
         """
 
-        # Convert DataFrame to a list of tuples
         records = df.to_records(index=False)
         data_tuples = [tuple(row) for row in records]
-
-        # Use execute_values to bulk insert
         execute_values(cursor, insert_query, data_tuples)
 
-        # Commit the transaction and close the connection
         conn.commit()
         cursor.close()
         conn.close()
-        print_with_timestamp("Data inserted successfully.")
+        print_with_timestamp(f"Data inserted successfully into {table_name}.")
 
     def run(self, stock_file):
-        """Main method to run the entire process for both timeframes."""
+        """Main method to run the entire process for daily, hourly, and minute timeframes."""
         self.load_env()
         self.check_package_version()
         self.connect_trading_client()
 
-        # Load stock symbols from file
         with open(stock_file, 'r') as file:
             stock_symbols = [line.strip() for line in file if line.strip()]
 
-        # Get the next date based on max timestamp for daily data
+        # Daily data
         start_date_daily = self.get_next_date()
         print(f"Starting daily data retrieval from: {start_date_daily}")
-
-        # Run for TimeFrame.Day
         all_bars_df_day = self.retrieve_historical_data(stock_symbols, start_date_daily, TimeFrame.Day)
         if not all_bars_df_day.empty:
             cleaned_df_day = self.clean_data(all_bars_df_day, TimeFrame.Day)
-            self.insert_ohlc_data(cleaned_df_day)  # Save to PostgreSQL
+            self.insert_ohlc_data(cleaned_df_day)
         else:
             print("No data available for TimeFrame.Day to clean and save.")
 
-        # Get the next hour based on max timestamp for hourly data
+        # Hourly data
         start_date_hourly = self.get_next_hour()
         print(f"Starting hourly data retrieval from: {start_date_hourly}")
-
-        # Run for TimeFrame.Hour
         all_bars_df_hour = self.retrieve_historical_data(stock_symbols, start_date_hourly, TimeFrame.Hour)
         if not all_bars_df_hour.empty:
             cleaned_df_hour = self.clean_data(all_bars_df_hour, TimeFrame.Hour)
-            self.insert_ohlc_data(cleaned_df_hour, is_hourly=True)  # Save to PostgreSQL
+            self.insert_ohlc_data(cleaned_df_hour, is_hourly=True)
         else:
             print("No data available for TimeFrame.Hour to clean and save.")
 
+        # Minute data
+        start_date_minute = self.get_next_minute()
+        print(f"Starting minute data retrieval from: {start_date_minute}")
+        all_bars_df_minute = self.retrieve_historical_data(stock_symbols, start_date_minute, TimeFrame.Minute)
+        if not all_bars_df_minute.empty:
+            cleaned_df_minute = self.clean_data(all_bars_df_minute, TimeFrame.Minute)
+            self.insert_ohlc_data(cleaned_df_minute, is_minute=True)
+        else:
+            print("No data available for TimeFrame.Minute to clean and save.")
 
 # Usage
 if __name__ == "__main__":

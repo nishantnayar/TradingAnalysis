@@ -13,7 +13,7 @@ def load_ohlc_data(timeframe):
         'password': 'nishant',
         'host': 'localhost',  # or your database host
         'port': '5432',       # default PostgreSQL port
-        'database': 'trading_data'
+        'database': 'pairs_trading'
     }
 
     # Create the database connection
@@ -64,10 +64,7 @@ def load_ohlc_data(timeframe):
     except Exception as e:
         st.error(f"Error loading data: {e}")
         return None, []
-
-
-
-
+   
 
 def convert_now():
     # Get the current date and time
@@ -92,7 +89,10 @@ def plot_ohlc_chart(ohlc_data, selected_ticker, selected_timeframe):
     time_buttons = {
         "Hourly": [{'step': 'all', 'label': 'All'}, {'count': 1, 'step': 'hour', 'label': '1 hour'}],
         "Minute": [{'step': 'all', 'label': 'All'}, {'count': 30, 'step': 'minute', 'label': '30 Mins'}],
-        "Daily": [{'step': 'all', 'label': 'All'}, {'count': 30, 'step': 'day', 'label': '30 Days'}]
+        "Daily": [{'step': 'all', 'label': 'All'}, 
+                  {'count': 7, 'step': 'day', 'label': '7 Days'},
+                  {'count': 15, 'step': 'day', 'label': '15 Days'},
+                  {'count': 30, 'step': 'day', 'label': '30 Days'}]
     }
 
     fig = go.Figure()
@@ -110,4 +110,89 @@ def plot_ohlc_chart(ohlc_data, selected_ticker, selected_timeframe):
     fig.update_xaxes(visible=True, rangeselector={'buttons': time_buttons[selected_timeframe]})
     st.plotly_chart(fig, use_container_width=True)
 
-    #TODO: fix caching
+
+def load_correlation_data():
+    # Database connection parameters
+    db_params = {
+        'user': 'postgres',
+        'password': 'nishant',
+        'host': 'localhost',  # or your database host
+        'port': '5432',       # default PostgreSQL port
+        'database': 'pairs_trading'
+    }
+
+    # Create the database connection
+    connection_string = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['database']}"
+    engine = create_engine(connection_string)
+    
+    try:
+        # Query the data from the selected table
+        query = """
+        WITH distinct_test_dates AS (
+            SELECT COUNT(DISTINCT "TestDate") AS total_test_dates
+            FROM co_integration_test
+            ),
+        valid_assets AS (
+            SELECT cit."Asset 1", cit."Asset 2"
+            FROM co_integration_test AS cit
+            WHERE cit."Checked" = 'Yes'
+            AND cit."ADF p-Value" < '0.05'
+            GROUP BY cit."Asset 1", cit."Asset 2"
+            HAVING COUNT(DISTINCT cit."TestDate") = (SELECT total_test_dates FROM distinct_test_dates)
+            )
+        SELECT cit."Asset 1" as "Asset 1",
+        yf1.industry as "Asset 1 Industry",
+        yf1.sector as "Asset 1 Sector",
+        yf1.longName as "Asset 1 Long Name",
+        cit."Asset 2" as "Asset 2",
+        yf2.industry as "Asset 2 Industry",
+        yf2.sector as "Asset 2 Sector",
+        yf2.longName as "Asset 2 Long Name",
+        cit."ADF p-Value", 
+        cit."TestDate"
+        FROM co_integration_test AS cit
+        JOIN valid_assets va
+        ON cit."Asset 1" = va."Asset 1" AND cit."Asset 2" = va."Asset 2"
+        JOIN yahoo_finance_info AS yf1
+        ON cit."Asset 1" = yf1.symbol
+        JOIN yahoo_finance_info AS yf2
+        ON cit."Asset 2" = yf2.symbol
+        WHERE cit."Checked" = 'Yes'
+        AND cit."ADF p-Value" < '0.05'
+        AND yf1.industry = yf2.industry
+        ORDER BY cit."ADF p-Value" DESC
+        limit 10;
+        """
+        coint_data = pd.read_sql(query, engine)
+        return coint_data
+        
+    except Exception as e:
+        st.error(f"Error Loading data: {e}")
+        return None
+    
+    
+def load_yahoo_data():
+    # Database connection parameters
+    db_params = {
+        'user': 'postgres',
+        'password': 'nishant',
+        'host': 'localhost',  # or your database host
+        'port': '5432',       # default PostgreSQL port
+        'database': 'pairs_trading'
+    }
+
+    # Create the database connection
+    connection_string = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['database']}"
+    engine = create_engine(connection_string)
+    
+    try:
+        # Query the data from the selected table
+        query = """select * from yahoo_finance_info"""
+        
+        yahoo_data = pd.read_sql(query, engine)
+        return yahoo_data
+    except Exception as e:
+        st.error(f"Error Loading data: {e}")
+        return None
+        
+

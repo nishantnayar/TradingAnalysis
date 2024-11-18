@@ -17,8 +17,9 @@ from streamlit_utils import load_ohlc_data, convert_now, plot_ohlc_chart
 from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 
+
 def streamlit_prices_display():
-    price_tab1, price_tab2 = st.tabs(["Charts", "Historical Data"])
+    price_tab1, price_tab2, price_tab3 = st.tabs(["Charts","Company Information", "Historical Data"])
 
     with price_tab1:
         st.header("Price Charts")
@@ -30,12 +31,13 @@ def streamlit_prices_display():
 
         with price_tab1_col2:
             # Check if 'ohlc_data' and 'tickers' are already in session_state
-            if 'ohlc_data' not in st.session_state or 'tickers' not in st.session_state:
+            if 'ohlc_data' not in st.session_state or 'tickers' not in st.session_state or 'selected_timeframe' not in st.session_state:
                 # Load the data and store in session state
                 ohlc_data, tickers = load_ohlc_data(selected_timeframe)
                 if ohlc_data is not None:
                     st.session_state['ohlc_data'] = ohlc_data
                     st.session_state['tickers'] = tickers
+                    st.session_state['timeframe'] = selected_timeframe
             else:
                 # Retrieve cached data from session state
                 ohlc_data = st.session_state['ohlc_data']
@@ -73,8 +75,20 @@ def streamlit_prices_display():
             with column_message:
                 current_time = st.session_state.get('last_reloaded_time', "N/A")
                 st.write('Last data reload time:', current_time)
-
     with price_tab2:
+
+        expander_heading1 = "**Basic Information**"
+        with st.expander(expander_heading1, icon=":material/analytics:"):
+            st.markdown(''' This is where basic information will be added''')
+        expander_heading2 = "**Key Officers**"
+        with st.expander(expander_heading2, icon=":material/shield_person:"):
+            st.markdown(''' This is where officers will be added''')
+        expander_heading3 = "**Key Financial Metrics**"
+        with st.expander(expander_heading3, icon=":material/finance:"):
+            st.markdown(''' This is where officers will be added''')
+        
+
+    with price_tab3:
         st.header("Price Historical Data")
         expander_heading = "**Key Terms Explained**"  # Simple Markdown bold
 

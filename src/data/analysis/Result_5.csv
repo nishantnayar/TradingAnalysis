@@ -1,0 +1,101 @@
+Asset 1,Asset 1 Industry,Asset 1 Sector,Asset 1 Long Name,Asset 2,Asset 2 Industry,Asset 2 Sector,Asset 2 Long Name,ADF p-Value,TestDate
+PODD,Medical Devices,Healthcare,Insulet Corporation,SYK,Medical Devices,Healthcare,Stryker Corporation,0.049417,2024-11-15
+EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.049056,2024-11-19
+CB,Insurance - Property & Casualty,Financial Services,Chubb Limited,PGR,Insurance - Property & Casualty,Financial Services,The Progressive Corporation,0.048947,2024-11-14
+FRT,REIT - Retail,Real Estate,Federal Realty Investment Trust,REG,REIT - Retail,Real Estate,Regency Centers Corporation,0.047887,2024-11-18
+IFF,Specialty Chemicals,Basic Materials,International Flavors & Fragrances Inc.,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.047461,2024-11-19
+CF,Agricultural Inputs,Basic Materials,"CF Industries Holdings, Inc.",FMC,Agricultural Inputs,Basic Materials,FMC Corporation,0.046733,2024-11-15
+CBOE,Financial Data & Stock Exchanges,Financial Services,"Cboe Global Markets, Inc.",MSCI,Financial Data & Stock Exchanges,Financial Services,MSCI Inc.,0.046664,2024-11-14
+CB,Insurance - Property & Casualty,Financial Services,Chubb Limited,PGR,Insurance - Property & Casualty,Financial Services,The Progressive Corporation,0.046208,2024-11-19
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",DGX,Diagnostics & Research,Healthcare,Quest Diagnostics Incorporated,0.046132,2024-11-14
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",DGX,Diagnostics & Research,Healthcare,Quest Diagnostics Incorporated,0.045381,2024-11-18
+FRT,REIT - Retail,Real Estate,Federal Realty Investment Trust,REG,REIT - Retail,Real Estate,Regency Centers Corporation,0.045288,2024-11-19
+EQR,REIT - Residential,Real Estate,Equity Residential,MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",0.044820,2024-11-14
+CB,Insurance - Property & Casualty,Financial Services,Chubb Limited,PGR,Insurance - Property & Casualty,Financial Services,The Progressive Corporation,0.043318,2024-11-15
+PODD,Medical Devices,Healthcare,Insulet Corporation,SYK,Medical Devices,Healthcare,Stryker Corporation,0.043245,2024-11-18
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",RVTY,Diagnostics & Research,Healthcare,"Revvity, Inc.",0.043127,2024-11-19
+EQR,REIT - Residential,Real Estate,Equity Residential,MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",0.042713,2024-11-15
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",DGX,Diagnostics & Research,Healthcare,Quest Diagnostics Incorporated,0.042676,2024-11-15
+DRI,Restaurants,Consumer Cyclical,"Darden Restaurants, Inc.",YUM,Restaurants,Consumer Cyclical,"Yum! Brands, Inc.",0.042363,2024-11-19
+DRI,Restaurants,Consumer Cyclical,"Darden Restaurants, Inc.",YUM,Restaurants,Consumer Cyclical,"Yum! Brands, Inc.",0.042310,2024-11-14
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",RVTY,Diagnostics & Research,Healthcare,"Revvity, Inc.",0.042134,2024-11-18
+CB,Insurance - Property & Casualty,Financial Services,Chubb Limited,PGR,Insurance - Property & Casualty,Financial Services,The Progressive Corporation,0.041959,2024-11-18
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,0.041820,2024-11-19
+EIX,Utilities - Regulated Electric,Utilities,Edison International,ES,Utilities - Regulated Electric,Utilities,Eversource Energy,0.041816,2024-11-19
+DRI,Restaurants,Consumer Cyclical,"Darden Restaurants, Inc.",YUM,Restaurants,Consumer Cyclical,"Yum! Brands, Inc.",0.040797,2024-11-15
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",RVTY,Diagnostics & Research,Healthcare,"Revvity, Inc.",0.040175,2024-11-15
+AJG,Insurance Brokers,Financial Services,Arthur J. Gallagher & Co.,BRO,Insurance Brokers,Financial Services,"Brown & Brown, Inc.",0.039262,2024-11-19
+DRI,Restaurants,Consumer Cyclical,"Darden Restaurants, Inc.",YUM,Restaurants,Consumer Cyclical,"Yum! Brands, Inc.",0.039160,2024-11-18
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,0.039069,2024-11-18
+CF,Agricultural Inputs,Basic Materials,"CF Industries Holdings, Inc.",FMC,Agricultural Inputs,Basic Materials,FMC Corporation,0.039014,2024-11-18
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",DGX,Diagnostics & Research,Healthcare,Quest Diagnostics Incorporated,0.038984,2024-11-19
+EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.038406,2024-11-15
+ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,0.037920,2024-11-14
+PODD,Medical Devices,Healthcare,Insulet Corporation,SYK,Medical Devices,Healthcare,Stryker Corporation,0.037449,2024-11-19
+EQR,REIT - Residential,Real Estate,Equity Residential,MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",0.037286,2024-11-18
+AJG,Insurance Brokers,Financial Services,Arthur J. Gallagher & Co.,BRO,Insurance Brokers,Financial Services,"Brown & Brown, Inc.",0.037058,2024-11-18
+AJG,Insurance Brokers,Financial Services,Arthur J. Gallagher & Co.,BRO,Insurance Brokers,Financial Services,"Brown & Brown, Inc.",0.036625,2024-11-15
+EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.036318,2024-11-14
+AON,Insurance Brokers,Financial Services,Aon plc,WTW,Insurance Brokers,Financial Services,Willis Towers Watson Public Limited Company,0.036138,2024-11-14
+REGN,Biotechnology,Healthcare,"Regeneron Pharmaceuticals, Inc.",TECH,Biotechnology,Healthcare,Bio-Techne Corporation,0.035970,2024-11-14
+EQR,REIT - Residential,Real Estate,Equity Residential,MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",0.035523,2024-11-19
+ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,0.035320,2024-11-18
+PODD,Medical Devices,Healthcare,Insulet Corporation,SYK,Medical Devices,Healthcare,Stryker Corporation,0.035238,2024-11-14
+ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,0.034899,2024-11-15
+AJG,Insurance Brokers,Financial Services,Arthur J. Gallagher & Co.,BRO,Insurance Brokers,Financial Services,"Brown & Brown, Inc.",0.034601,2024-11-14
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,0.034507,2024-11-15
+FRT,REIT - Retail,Real Estate,Federal Realty Investment Trust,REG,REIT - Retail,Real Estate,Regency Centers Corporation,0.034356,2024-11-14
+CBOE,Financial Data & Stock Exchanges,Financial Services,"Cboe Global Markets, Inc.",MSCI,Financial Data & Stock Exchanges,Financial Services,MSCI Inc.,0.034274,2024-11-15
+ADP,Software - Application,Technology,"Automatic Data Processing, Inc.",INTU,Software - Application,Technology,Intuit Inc.,0.034154,2024-11-14
+IFF,Specialty Chemicals,Basic Materials,International Flavors & Fragrances Inc.,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.033789,2024-11-15
+CPT,REIT - Residential,Real Estate,Camden Property Trust,ESS,REIT - Residential,Real Estate,"Essex Property Trust, Inc.",0.033410,2024-11-18
+ED,Utilities - Regulated Electric,Utilities,"Consolidated Edison, Inc.",FE,Utilities - Regulated Electric,Utilities,FirstEnergy Corp.,0.033356,2024-11-18
+ED,Utilities - Regulated Electric,Utilities,"Consolidated Edison, Inc.",FE,Utilities - Regulated Electric,Utilities,FirstEnergy Corp.,0.032947,2024-11-14
+GEN,Software - Infrastructure,Technology,Gen Digital Inc.,SNPS,Software - Infrastructure,Technology,"Synopsys, Inc.",0.032821,2024-11-14
+ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,0.032652,2024-11-19
+MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.032437,2024-11-14
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",ECL,Specialty Chemicals,Basic Materials,Ecolab Inc.,0.032231,2024-11-14
+AVB,REIT - Residential,Real Estate,"AvalonBay Communities, Inc.",EQR,REIT - Residential,Real Estate,Equity Residential,0.032021,2024-11-14
+ANET,Computer Hardware,Technology,"Arista Networks, Inc.",HPQ,Computer Hardware,Technology,HP Inc.,0.031863,2024-11-18
+REGN,Biotechnology,Healthcare,"Regeneron Pharmaceuticals, Inc.",TECH,Biotechnology,Healthcare,Bio-Techne Corporation,0.031758,2024-11-18
+MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.031691,2024-11-15
+MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.031674,2024-11-18
+FRT,REIT - Retail,Real Estate,Federal Realty Investment Trust,REG,REIT - Retail,Real Estate,Regency Centers Corporation,0.031366,2024-11-15
+CPT,REIT - Residential,Real Estate,Camden Property Trust,ESS,REIT - Residential,Real Estate,"Essex Property Trust, Inc.",0.031275,2024-11-15
+REGN,Biotechnology,Healthcare,"Regeneron Pharmaceuticals, Inc.",TECH,Biotechnology,Healthcare,Bio-Techne Corporation,0.031231,2024-11-19
+REGN,Biotechnology,Healthcare,"Regeneron Pharmaceuticals, Inc.",TECH,Biotechnology,Healthcare,Bio-Techne Corporation,0.031131,2024-11-15
+MAA,REIT - Residential,Real Estate,"Mid-America Apartment Communities, Inc.",UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.030843,2024-11-19
+CBOE,Financial Data & Stock Exchanges,Financial Services,"Cboe Global Markets, Inc.",MSCI,Financial Data & Stock Exchanges,Financial Services,MSCI Inc.,0.030661,2024-11-19
+ANET,Computer Hardware,Technology,"Arista Networks, Inc.",HPQ,Computer Hardware,Technology,HP Inc.,0.030424,2024-11-14
+FICO,Software - Application,Technology,Fair Isaac Corporation,PTC,Software - Application,Technology,PTC Inc.,0.030378,2024-11-14
+AVB,REIT - Residential,Real Estate,"AvalonBay Communities, Inc.",EQR,REIT - Residential,Real Estate,Equity Residential,0.030280,2024-11-15
+CF,Agricultural Inputs,Basic Materials,"CF Industries Holdings, Inc.",FMC,Agricultural Inputs,Basic Materials,FMC Corporation,0.030229,2024-11-14
+MU,Semiconductors,Technology,"Micron Technology, Inc.",QCOM,Semiconductors,Technology,QUALCOMM Incorporated,0.030208,2024-11-14
+CPT,REIT - Residential,Real Estate,Camden Property Trust,ESS,REIT - Residential,Real Estate,"Essex Property Trust, Inc.",0.030176,2024-11-14
+EMN,Specialty Chemicals,Basic Materials,Eastman Chemical Company,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.029893,2024-11-18
+CBOE,Financial Data & Stock Exchanges,Financial Services,"Cboe Global Markets, Inc.",MSCI,Financial Data & Stock Exchanges,Financial Services,MSCI Inc.,0.029738,2024-11-18
+ANET,Computer Hardware,Technology,"Arista Networks, Inc.",HPQ,Computer Hardware,Technology,HP Inc.,0.029641,2024-11-15
+CF,Agricultural Inputs,Basic Materials,"CF Industries Holdings, Inc.",FMC,Agricultural Inputs,Basic Materials,FMC Corporation,0.029542,2024-11-19
+MU,Semiconductors,Technology,"Micron Technology, Inc.",QCOM,Semiconductors,Technology,QUALCOMM Incorporated,0.029467,2024-11-15
+CRL,Diagnostics & Research,Healthcare,"Charles River Laboratories International, Inc.",RVTY,Diagnostics & Research,Healthcare,"Revvity, Inc.",0.029442,2024-11-14
+AVB,REIT - Residential,Real Estate,"AvalonBay Communities, Inc.",UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.029371,2024-11-18
+ED,Utilities - Regulated Electric,Utilities,"Consolidated Edison, Inc.",FE,Utilities - Regulated Electric,Utilities,FirstEnergy Corp.,0.028863,2024-11-15
+MU,Semiconductors,Technology,"Micron Technology, Inc.",QCOM,Semiconductors,Technology,QUALCOMM Incorporated,0.028524,2024-11-18
+AVB,REIT - Residential,Real Estate,"AvalonBay Communities, Inc.",UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.028487,2024-11-19
+AON,Insurance Brokers,Financial Services,Aon plc,WTW,Insurance Brokers,Financial Services,Willis Towers Watson Public Limited Company,0.028412,2024-11-15
+DPZ,Restaurants,Consumer Cyclical,"Domino's Pizza, Inc.",YUM,Restaurants,Consumer Cyclical,"Yum! Brands, Inc.",0.028089,2024-11-14
+ALGN,Medical Instruments & Supplies,Healthcare,"Align Technology, Inc.",RMD,Medical Instruments & Supplies,Healthcare,ResMed Inc.,0.028081,2024-11-18
+APTV,Auto Parts,Consumer Cyclical,Aptiv PLC,BWA,Auto Parts,Consumer Cyclical,BorgWarner Inc.,0.028024,2024-11-14
+MU,Semiconductors,Technology,"Micron Technology, Inc.",QCOM,Semiconductors,Technology,QUALCOMM Incorporated,0.027942,2024-11-19
+FICO,Software - Application,Technology,Fair Isaac Corporation,PTC,Software - Application,Technology,PTC Inc.,0.027728,2024-11-15
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.027389,2024-11-15
+CPT,REIT - Residential,Real Estate,Camden Property Trust,UDR,REIT - Residential,Real Estate,"UDR, Inc.",0.027354,2024-11-18
+CPB,Packaged Foods,Consumer Defensive,Campbell Soup Company,LW,Packaged Foods,Consumer Defensive,"Lamb Weston Holdings, Inc.",0.027215,2024-11-19
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.027135,2024-11-14
+ANET,Computer Hardware,Technology,"Arista Networks, Inc.",HPQ,Computer Hardware,Technology,HP Inc.,0.027057,2024-11-19
+KDP,Beverages - Non-Alcoholic,Consumer Defensive,Keurig Dr Pepper Inc.,MNST,Beverages - Non-Alcoholic,Consumer Defensive,Monster Beverage Corporation,0.027019,2024-11-14
+IFF,Specialty Chemicals,Basic Materials,International Flavors & Fragrances Inc.,PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.026972,2024-11-18
+AON,Insurance Brokers,Financial Services,Aon plc,WTW,Insurance Brokers,Financial Services,Willis Towers Watson Public Limited Company,0.026838,2024-11-18
+APD,Specialty Chemicals,Basic Materials,"Air Products and Chemicals, Inc.",PPG,Specialty Chemicals,Basic Materials,"PPG Industries, Inc.",0.026717,2024-11-19
+APTV,Auto Parts,Consumer Cyclical,Aptiv PLC,BWA,Auto Parts,Consumer Cyclical,BorgWarner Inc.,0.026385,2024-11-15
+FICO,Software - Application,Technology,Fair Isaac Corporation,PTC,Software - Application,Technology,PTC Inc.,0.026243,2024-11-18

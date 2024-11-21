@@ -13,6 +13,7 @@ def run_trading_analysis():
     trading_system = AlpacaDataLoader(dotenv_path)
     trading_system.run(stock_file)  # Remove start_date parameter
 
+
 def run_pair_analysis():
     db_params = {
         'user': 'postgres',

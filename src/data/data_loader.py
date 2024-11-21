@@ -144,6 +144,9 @@ class AlpacaDataLoader:
         if all_bars_data:
             all_bars_df = pd.concat(all_bars_data)
             print(f"Final dataframe created with {len(all_bars_df)} records for {timeframe}")
+            #print(all_bars_df.head(5))
+            # print(all_bars_df.columns)
+            # print(all_bars_df.index)
             return all_bars_df
         else:
             print("No data retrieved.")
@@ -155,9 +158,11 @@ class AlpacaDataLoader:
 
         # Remove 'symbol' from the index and reset it
         try:
+            all_bars_df.drop(columns=['symbol'], inplace=True)
             all_bars_df = all_bars_df.reset_index()
-            all_bars_df.drop(columns=['level_0'], inplace=True)
-            all_bars_df.rename(columns={'level_1': 'timestamp'}, inplace=True)
+            # Removed due to error on 11/18
+            #all_bars_df.drop(columns=['level_0'], inplace=True)
+            #all_bars_df.rename(columns={'level_1': 'timestamp'}, inplace=True)
             all_bars_df = all_bars_df[['symbol', 'timestamp', 'open', 'high', 'low', 'close', 'volume', 'trade_count', 'vwap']]
             print(f"Removed symbol column from the index for {timeframe}.\n")
         except Exception as e:
